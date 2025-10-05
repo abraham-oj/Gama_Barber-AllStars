@@ -20,7 +20,7 @@ Puedes hacer cambios pequeños directamente desde GitHub sin necesidad de saber 
 
 ## ¿Y las imágenes?
 
-Cambiar las imágenes es un poco más técnico. Si necesitas actualizar las fotos de la galería, pídele ayuda a Abraham.
+Cambiar las imágenes es un poco más técnico. Si necesitas actualizar las fotos de la galería, Marcame.
 
 ---
 
