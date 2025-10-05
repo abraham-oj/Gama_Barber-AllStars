@@ -1,38 +1,41 @@
-// Espera a que todo el HTML esté cargado para ejecutar el código
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Lógica para el menú móvil
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
+    // --- Lógica del Menú Desplegable ---
+    const dropdownButton = document.getElementById('menu-dropdown-button');
+    const dropdownMenu = document.getElementById('menu-dropdown');
 
-    if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+    if (dropdownButton && dropdownMenu) {
+        dropdownButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Evita que el click se propague al window
+            dropdownMenu.classList.toggle('hidden');
         });
     }
 
-    // Lógica para cerrar el menú al hacer clic en un enlace
-    const navLinks = document.querySelectorAll('#mobile-menu a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (mobileMenu) {
-                mobileMenu.classList.add('hidden');
-            }
-        });
+    // Cierra el menú si se hace clic fuera de él
+    window.addEventListener('click', () => {
+        if (dropdownMenu && !dropdownMenu.classList.contains('hidden')) {
+            dropdownMenu.classList.add('hidden');
+        }
     });
 
-    // Lógica para el formulario de citas
-    const appointmentForm = document.querySelector('#cita form');
-    if (appointmentForm) {
-        appointmentForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Previene que la página se recargue
+    // --- Lógica del Formulario para WhatsApp ---
+    const whatsappForm = document.getElementById('whatsapp-form');
+    if (whatsappForm) {
+        whatsappForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-            // Aquí se enviaría la información a un servidor.
-            // Por ahora, solo mostramos una alerta de confirmación.
-            alert('¡Gracias por agendar! Te contactaremos pronto para confirmar tu cita.');
+            const nombre = this.querySelector('[name="name"]').value;
+            const servicio = this.querySelector('[name="service"]').value;
+            const fecha = this.querySelector('[name="date"]').value;
 
-            this.reset(); // Limpia el formulario
+            const numero = "5212212396187";
+
+            const mensaje = `Hola! 👋 Me gustaría agendar una cita.\n\n*Nombre:* ${nombre}\n*Servicio:* ${servicio}\n*Fecha preferida:* ${fecha}`;
+
+            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+            window.open(url, '_blank');
+            this.reset();
         });
     }
-
 });
