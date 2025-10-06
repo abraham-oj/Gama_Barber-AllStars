@@ -25,3 +25,5 @@ Cambiar las imágenes es un poco más técnico. Si necesitas actualizar las foto
 ---
 
 ¡Felicidades por tu nueva Pagina! Puro pa dela bro! Exito y que tengas tanto trabajo que te vuelvas romi-el manos de tijeras jaja !
+
+Link Corto de la pag -------------> **https://abraham-oj.github.io/Gama_Barber-AllStars/** 
