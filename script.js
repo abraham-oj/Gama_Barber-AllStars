@@ -1,41 +1,231 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* --- Tailwind Directives (si lo usas en un proyecto con build) --- */
+/* @tailwind base; @tailwind components; @tailwind utilities; */
 
-    // --- Lógica del Menú Desplegable ---
-    const dropdownButton = document.getElementById('menu-dropdown-button');
-    const dropdownMenu = document.getElementById('menu-dropdown');
+/* --- FUENTES Y COLORES BASE --- */
+:root {
+    --gold: #D4AF37; /* Un dorado elegante */
+    --black: #050505;
+}
 
-    if (dropdownButton && dropdownMenu) {
-        dropdownButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Evita que el click se propague al window
-            dropdownMenu.classList.toggle('hidden');
-        });
+body {
+    background-color: var(--black);
+    color: #f1f1f1;
+    position: relative; /* Necesario para que el z-index de los hijos funcione bien */
+}
+
+/* --- ESTILO PARA LAS PARTÍCULAS DE FONDO --- */
+#tsparticles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Lo manda detrás de todo el contenido */
+}
+
+.font-teko { font-family: 'Teko', sans-serif; }
+.font-sans { font-family: 'Inter', sans-serif; }
+.font-cursive { font-family: "Playwrite AU VIC", cursive; }
+
+.text-gold { color: var(--gold); }
+.bg-gold { background-color: var(--gold); }
+.border-gold { border-color: var(--gold); }
+.title {
+    font-family: 'Teko', sans-serif;
+    font-size: 3rem; /* text-5xl */
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* --- COMPONENTES REUTILIZABLES --- */
+.nav-link {
+    color: white;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.nav-link:hover { color: var(--gold); }
+
+.dropdown-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #d1d5db; /* gray-300 */
+}
+.dropdown-link:hover {
+    background-color: var(--gold);
+    color: var(--black);
+}
+
+.btn {
+    background-color: var(--gold);
+    color: var(--black);
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+.btn:hover { transform: scale(1.05); }
+
+/* --- FORMULARIO --- */
+.form-label {
+    display: block;
+    color: #d1d5db; /* gray-300 */
+    margin-bottom: 0.5rem;
+}
+.form-input {
+    width: 100%;
+    background-color: #1f2937; /* gray-800 */
+    border: 1px solid #374151; /* gray-700 */
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    color: white;
+}
+.form-input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+
+/* --- ANIMACIÓN DE ENTRADA IMPACTANTE --- */
+@keyframes impact-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(50px);
     }
-
-    // Cierra el menú si se hace clic fuera de él
-    window.addEventListener('click', () => {
-        if (dropdownMenu && !dropdownMenu.classList.contains('hidden')) {
-            dropdownMenu.classList.add('hidden');
-        }
-    });
-
-    // --- Lógica del Formulario para WhatsApp ---
-    const whatsappForm = document.getElementById('whatsapp-form');
-    if (whatsappForm) {
-        whatsappForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const nombre = this.querySelector('[name="name"]').value;
-            const servicio = this.querySelector('[name="service"]').value;
-            const fecha = this.querySelector('[name="date"]').value;
-            
-            const numero = "5212212396187";
-            
-            const mensaje = `Hola! 👋 Me gustaría agendar una cita.\n\n*Nombre:* ${nombre}\n*Servicio:* ${servicio}\n*Fecha preferida:* ${fecha}`;
-            
-            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-            
-            window.open(url, '_blank');
-            this.reset();
-        });
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
     }
-});
+}
+.animate-impact-in {
+    animation: impact-in 1s ease-out forwards;
+}
+
+/* --- EFECTO DE MÁQUINA DE ESCRIBIR PARA "ROMI" --- */
+.typewriter h2 {
+    overflow: hidden;
+    border-right: .15em solid var(--gold);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation:
+        typing 3s steps(5, end),
+        blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--gold); }
+}
+
+/* --- TARJETAS DE SERVICIO --- */
+.service-card {
+    background-color: rgba(31, 41, 55, 0.5); /* bg-gray-800/50 */
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #374151; /* border-gray-700 */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.service-title {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.875rem; /* text-3xl */
+    color: white;
+    margin-bottom: 0.5rem;
+}
+.service-desc {
+    color: #9ca3af; /* gray-400 */
+    margin-bottom: 1rem;
+    flex-grow: 1; /* Empuja el footer hacia abajo */
+}
+.service-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+.service-price {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 700;
+    color: var(--gold);
+}
+.service-time {
+    color: #9ca3af; /* gray-400 */
+}
+
+
+/* --- GALERÍA --- */
+.gallery-item {
+    position: relative;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+}
+.gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease-in-out;
+}
+.group:hover .gallery-img {
+    transform: scale(1.10);
+}
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-family: 'Teko', sans-serif;
+    font-size: 1.5rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.group:hover .gallery-overlay {
+    opacity: 1;
+}
+
+/* --- FOOTER & SOCIAL --- */
+.social-link {
+    color: #9ca3af; /* gray-400 */
+    transition: color 0.3s ease;
+}
+.social-link:hover {
+    color: var(--gold);
+}
+
+/* --- BOTÓN FLOTANTE WHATSAPP --- */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    z-index: 50;
+    background-color: #25D366;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    transition: transform 0.3s ease;
+}
+.floating-whatsapp:hover {
+    transform: scale(1.10);
+}
