@@ -10,6 +10,17 @@
 body {
     background-color: var(--black);
     color: #f1f1f1;
+    position: relative; /* Necesario para que el z-index de los hijos funcione bien */
+}
+
+/* --- ESTILO PARA LAS PARTÍCULAS DE FONDO --- */
+#tsparticles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Lo manda detrás de todo el contenido */
 }
 
 .font-teko { font-family: 'Teko', sans-serif; }
@@ -102,7 +113,7 @@ body {
     white-space: nowrap;
     margin: 0 auto;
     letter-spacing: .15em;
-    animation: 
+    animation:
         typing 3s steps(5, end),
         blink-caret .75s step-end infinite;
 }
